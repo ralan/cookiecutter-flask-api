@@ -1,0 +1,22 @@
+openapi: 3.0.3
+
+info:
+  title: {{cookiecutter.project_name}} API
+  description: {{cookiecutter.project_short_description}}
+  version: 1.0.0
+
+paths:
+  /ping:
+    get:
+      summary: Test server health
+      responses:
+        '200':
+          description: Server is running
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok

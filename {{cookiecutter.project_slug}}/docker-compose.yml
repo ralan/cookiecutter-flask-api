@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+    {{cookiecutter.project_slug}}:
+        image: {{cookiecutter.project_slug}}
+        build: app
+        container_name: {{cookiecutter.project_slug}}
+        ports:
+            - "80:80"
+        environment:
+            - DB_PASSWORD=${{"{"+cookiecutter.project_slug|upper}}_DB_MYSQL_ROOT_PASSWORD}
+            - {{cookiecutter.project_slug|upper}}_SENTRY_DSN
+        depends_on:
+            - {{cookiecutter.project_slug}}_db
+
+    {{cookiecutter.project_slug}}_db:
+        image: {{cookiecutter.project_slug}}_db
+        build: db
+        container_name: {{cookiecutter.project_slug}}_db
+        volumes:
+            - ${{"{"+cookiecutter.project_slug|upper}}_DOCKER_VOLUMES:-~/docker_volumes}/{{cookiecutter.project_slug}}/db:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=${{"{"+cookiecutter.project_slug|upper}}_DB_MYSQL_ROOT_PASSWORD}

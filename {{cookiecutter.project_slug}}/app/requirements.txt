@@ -1,0 +1,8 @@
+connexion[swagger-ui]
+flask
+flask-migrate
+flask-sqlalchemy
+gunicorn
+mysqlclient
+pytest
+sentry-sdk[flask]

@@ -1,0 +1,5 @@
+{
+    "project_name": "Big Thing",
+    "project_slug": "{{cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_')}}",
+    "project_short_description": "The Next Big Thing to Make the World a Better Place"
+}

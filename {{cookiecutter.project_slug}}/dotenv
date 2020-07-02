@@ -1,0 +1,14 @@
+## Copy this file to `.env` and set the following environment variables
+
+## MANDATORY
+{{cookiecutter.project_slug|upper}}_DB_MYSQL_ROOT_PASSWORD=
+
+## FOR PRODUCTION ENVIRONMENT
+# {{cookiecutter.project_slug|upper}}_SENTRY_DSN=
+
+## OPTIONAL
+# {{cookiecutter.project_slug|upper}}_DB_HOST=
+# {{cookiecutter.project_slug|upper}}_DOCKER_VOLUMES=~/docker_volumes
+
+# Workaround for VS Code unresolved-import issue
+PYTHONPATH=${PYTHONPATH}:app

@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+    {{cookiecutter.project_slug}}_dev:
+        image: {{cookiecutter.project_slug}}:dev
+        build: app
+        container_name: {{cookiecutter.project_slug}}_dev
+        ports:
+            - "8080:80"
+        volumes:
+            - ./app:/opt/app
+        environment:
+            - ENV_TYPE=dev
+            - DB_HOST={{cookiecutter.project_slug}}_db_dev
+        depends_on:
+            - {{cookiecutter.project_slug}}_db_dev
+
+    {{cookiecutter.project_slug}}_db_dev:
+        image: {{cookiecutter.project_slug}}_db:dev
+        build: db
+        container_name: {{cookiecutter.project_slug}}_db_dev
+        volumes:
+            - ${{"{"+cookiecutter.project_slug|upper}}_DOCKER_VOLUMES:-~/docker_volumes}/{{cookiecutter.project_slug}}_dev/db:/var/lib/mysql
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=1

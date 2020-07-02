@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+    {{cookiecutter.project_slug}}_test:
+        image: {{cookiecutter.project_slug}}:test
+        build: app
+        container_name: {{cookiecutter.project_slug}}_test
+        volumes:
+            - ./app:/opt/app
+        environment:
+            - ENV_TYPE=test
+            - DB_HOST={{cookiecutter.project_slug}}_db_test
+        depends_on:
+            - {{cookiecutter.project_slug}}_db_test
+
+    {{cookiecutter.project_slug}}_db_test:
+        image: {{cookiecutter.project_slug}}_db:test
+        build: db
+        container_name: {{cookiecutter.project_slug}}_db_test
+        volumes:
+            - ${{"{"+cookiecutter.project_slug|upper}}_DOCKER_VOLUMES:-~/docker_volumes}/{{cookiecutter.project_slug}}_test/db:/var/lib/mysql
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=1

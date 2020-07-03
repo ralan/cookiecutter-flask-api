@@ -6,7 +6,7 @@ services:
         build: app
         container_name: {{cookiecutter.project_slug}}_dev
         ports:
-            - "${{"{"+cookiecutter.project_slug|upper}}_DEV_PORT:-8080}:80"
+            - "${DEV_PORT:-8080}:80"
         volumes:
             - ./app:/opt/app
         environment:
@@ -20,6 +20,6 @@ services:
         build: db
         container_name: {{cookiecutter.project_slug}}_db_dev
         volumes:
-            - ${{"{"+cookiecutter.project_slug|upper}}_DOCKER_VOLUMES:-~/docker_volumes}/{{cookiecutter.project_slug}}_dev/db:/var/lib/mysql
+            - ${DOCKER_VOLUMES:-~/docker_volumes}/{{cookiecutter.project_slug}}_dev/db:/var/lib/mysql
         environment:
             - MYSQL_ALLOW_EMPTY_PASSWORD=1

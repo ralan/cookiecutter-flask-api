@@ -6,7 +6,7 @@ services:
         build: app
         container_name: {{cookiecutter.project_slug}}
         ports:
-            - "80:80"
+            - "${{"{"+cookiecutter.project_slug|upper}}_PROD_PORT:-80}:80"
         environment:
             - DB_PASSWORD=${{"{"+cookiecutter.project_slug|upper}}_DB_MYSQL_ROOT_PASSWORD}
             - {{cookiecutter.project_slug|upper}}_SENTRY_DSN

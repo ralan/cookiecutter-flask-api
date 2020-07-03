@@ -6,7 +6,7 @@ services:
         build: app
         container_name: {{cookiecutter.project_slug}}_dev
         ports:
-            - "8080:80"
+            - "${{"{"+cookiecutter.project_slug|upper}}_DEV_PORT:-8080}:80"
         volumes:
             - ./app:/opt/app
         environment:

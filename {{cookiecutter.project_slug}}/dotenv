@@ -7,8 +7,10 @@
 # {{cookiecutter.project_slug|upper}}_SENTRY_DSN=
 
 ## OPTIONAL
-# {{cookiecutter.project_slug|upper}}_DB_HOST=
+# {{cookiecutter.project_slug|upper}}_DB_HOST={{cookiecutter.project_slug}}_db
 # {{cookiecutter.project_slug|upper}}_DOCKER_VOLUMES=~/docker_volumes
+# {{cookiecutter.project_slug|upper}}_PROD_PORT=80
+# {{cookiecutter.project_slug|upper}}_DEV_PORT=8080
 
 # Workaround for VS Code unresolved-import issue
 PYTHONPATH=${PYTHONPATH}:app

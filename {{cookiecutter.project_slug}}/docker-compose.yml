@@ -9,6 +9,7 @@ services:
             - "${PROD_PORT:-80}:80"
         environment:
             - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - DB_HOST=${DB_HOST:-{{cookiecutter.project_slug}}_db}
             - SENTRY_DSN
         depends_on:
             - {{cookiecutter.project_slug}}_db
@@ -18,6 +19,6 @@ services:
         build: db
         container_name: {{cookiecutter.project_slug}}_db
         volumes:
-            - ${DOCKER_VOLUMES:-~/docker_volumes}/{{cookiecutter.project_slug}}/db:/var/lib/mysql
+            - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}}/db:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD

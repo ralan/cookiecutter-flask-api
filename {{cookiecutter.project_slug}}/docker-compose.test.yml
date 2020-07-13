@@ -19,6 +19,6 @@ services:
         build: db
         container_name: {{cookiecutter.project_slug}}_db_test
         volumes:
-            - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}_test}/db:/var/lib/mysql
+            - ${DOCKER_VOLUMES:-~/docker_volumes}/{{cookiecutter.project_slug}}_test/db/lib:/var/lib/mysql
         environment:
             - MYSQL_ALLOW_EMPTY_PASSWORD=1

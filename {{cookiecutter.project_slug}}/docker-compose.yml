@@ -45,7 +45,7 @@ services:
         build: db
         container_name: {{cookiecutter.project_slug}}_db
         volumes:
-            - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}}/db:/var/lib/mysql
+            - ${DOCKER_VOLUMES:-~/docker_volumes}/{{cookiecutter.project_slug}}/db/lib:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD
         restart: always
@@ -57,6 +57,6 @@ services:
         build: broker
         container_name: {{cookiecutter.project_slug}}_broker
         volumes:
-            - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}}/broker/lib:/var/lib/rabbitmq
+            - ${DOCKER_VOLUMES:-~/docker_volumes}/{{cookiecutter.project_slug}}/broker/lib:/var/lib/rabbitmq
         restart: always
     {%- endif %}

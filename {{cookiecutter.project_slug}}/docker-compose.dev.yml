@@ -45,7 +45,7 @@ services:
         build: db
         container_name: {{cookiecutter.project_slug}}_db_dev
         volumes:
-            - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}_dev}/db:/var/lib/mysql
+            - ${DOCKER_VOLUMES:-~/docker_volumes}/{{cookiecutter.project_slug}}_dev/db/lib:/var/lib/mysql
         environment:
             - MYSQL_ALLOW_EMPTY_PASSWORD=1
     
@@ -56,5 +56,5 @@ services:
         build: broker
         container_name: {{cookiecutter.project_slug}}_broker_dev
         volumes:
-            - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}_dev}/broker/lib:/var/lib/rabbitmq
+            - ${DOCKER_VOLUMES:-~/docker_volumes}/{{cookiecutter.project_slug}}_dev/broker/lib:/var/lib/rabbitmq
     {%- endif %}

@@ -8,6 +8,9 @@ MYSQL_ROOT_PASSWORD=
 
 ## OPTIONAL
 # DB_HOST={{cookiecutter.project_slug}}_db
+{%- if cookiecutter.add_celery == "yes" %}
+# BROKER_HOST={{cookiecutter.project_slug}}_broker
+{%- endif %}
 # DOCKER_VOLUMES=~/docker_volumes/{{cookiecutter.project_slug}}
 # PROD_PORT=80
 # DEV_PORT=8080

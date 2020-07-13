@@ -12,8 +12,33 @@ services:
         environment:
             - ENV_TYPE=dev
             - DB_HOST=${DB_HOST:-{{cookiecutter.project_slug}}_db_dev}
+            {%- if cookiecutter.add_celery == "yes" %}
+            - BROKER_HOST=${BROKER_HOST:-{{cookiecutter.project_slug}}_broker_dev}
+            {%- endif %}
         depends_on:
             - {{cookiecutter.project_slug}}_db_dev
+            {%- if cookiecutter.add_celery == "yes" %}
+            - {{cookiecutter.project_slug}}_broker_dev
+            - {{cookiecutter.project_slug}}_workers_dev
+            {%- endif %}
+
+    {%- if cookiecutter.add_celery == "yes" %}
+
+    {{cookiecutter.project_slug}}_workers_dev:
+        image: {{cookiecutter.project_slug}}:dev
+        build: app
+        container_name: {{cookiecutter.project_slug}}_workers_dev
+        command: workers
+        volumes:
+            - ./app:/opt/app
+        environment:
+            - ENV_TYPE=dev
+            - DB_HOST=${DB_HOST:-{{cookiecutter.project_slug}}_db_dev}
+            - BROKER_HOST=${BROKER_HOST:-{{cookiecutter.project_slug}}_broker_dev}
+        depends_on:
+            - {{cookiecutter.project_slug}}_db_dev
+            - {{cookiecutter.project_slug}}_broker_dev
+    {%- endif %}
 
     {{cookiecutter.project_slug}}_db_dev:
         image: {{cookiecutter.project_slug}}_db:dev
@@ -23,3 +48,13 @@ services:
             - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}_dev}/db:/var/lib/mysql
         environment:
             - MYSQL_ALLOW_EMPTY_PASSWORD=1
+    
+    {%- if cookiecutter.add_celery == "yes" %}
+
+    {{cookiecutter.project_slug}}_broker_dev:
+        image: {{cookiecutter.project_slug}}_broker:dev
+        build: broker
+        container_name: {{cookiecutter.project_slug}}_broker_dev
+        volumes:
+            - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}_dev}/broker/lib:/var/lib/rabbitmq
+    {%- endif %}

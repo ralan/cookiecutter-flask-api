@@ -11,8 +11,32 @@ services:
             - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
             - DB_HOST=${DB_HOST:-{{cookiecutter.project_slug}}_db}
             - SENTRY_DSN
+            {%- if cookiecutter.add_celery == "yes" %}
+            - BROKER_HOST=${BROKER_HOST:-{{cookiecutter.project_slug}}_broker}
+            {%- endif %}
         depends_on:
             - {{cookiecutter.project_slug}}_db
+            {%- if cookiecutter.add_celery == "yes" %}
+            - {{cookiecutter.project_slug}}_broker
+            - {{cookiecutter.project_slug}}_workers
+            {%- endif %}
+
+    {%- if cookiecutter.add_celery == "yes" %}
+
+    {{cookiecutter.project_slug}}_workers:
+        image: {{cookiecutter.project_slug}}
+        build: app
+        container_name: {{cookiecutter.project_slug}}_workers
+        command: workers
+        environment:
+            - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - DB_HOST=${DB_HOST:-{{cookiecutter.project_slug}}_db}
+            - SENTRY_DSN
+            - BROKER_HOST=${BROKER_HOST:-{{cookiecutter.project_slug}}_broker}
+        depends_on:
+            - {{cookiecutter.project_slug}}_db
+            - {{cookiecutter.project_slug}}_broker
+    {%- endif %}
 
     {{cookiecutter.project_slug}}_db:
         image: {{cookiecutter.project_slug}}_db
@@ -22,3 +46,13 @@ services:
             - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}}/db:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD
+
+    {%- if cookiecutter.add_celery == "yes" %}
+
+    {{cookiecutter.project_slug}}_broker:
+        image: {{cookiecutter.project_slug}}_broker
+        build: broker
+        container_name: {{cookiecutter.project_slug}}_broker
+        volumes:
+            - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}}/broker/lib:/var/lib/rabbitmq
+    {%- endif %}

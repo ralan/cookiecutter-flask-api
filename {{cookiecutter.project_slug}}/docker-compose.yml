@@ -20,6 +20,7 @@ services:
             - {{cookiecutter.project_slug}}_broker
             - {{cookiecutter.project_slug}}_workers
             {%- endif %}
+        restart: always
 
     {%- if cookiecutter.add_celery == "yes" %}
 
@@ -36,6 +37,7 @@ services:
         depends_on:
             - {{cookiecutter.project_slug}}_db
             - {{cookiecutter.project_slug}}_broker
+        restart: always
     {%- endif %}
 
     {{cookiecutter.project_slug}}_db:
@@ -46,6 +48,7 @@ services:
             - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}}/db:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD
+        restart: always
 
     {%- if cookiecutter.add_celery == "yes" %}
 
@@ -55,4 +58,5 @@ services:
         container_name: {{cookiecutter.project_slug}}_broker
         volumes:
             - ${DOCKER_VOLUMES:-~/docker_volumes/{{cookiecutter.project_slug}}}/broker/lib:/var/lib/rabbitmq
+        restart: always
     {%- endif %}

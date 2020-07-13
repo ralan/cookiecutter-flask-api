@@ -3,10 +3,11 @@ import sentry_sdk
 from sentry_sdk.integrations.celery import CeleryIntegration
 from celery import Celery
 
-sentry_dsn = os.getenv("SENTRY_DSN")
+if os.getenv("ENV_TYPE") == "prod":
+    sentry_dsn = os.getenv("SENTRY_DSN")
 
-if sentry_dsn:
-    sentry_sdk.init(sentry_dsn, integrations=[CeleryIntegration()])
+    if sentry_dsn:
+        sentry_sdk.init(sentry_dsn, integrations=[CeleryIntegration()])
 
 if os.getenv("BROKER_URL"):
     broker_url = os.getenv("BROKER_URL")
